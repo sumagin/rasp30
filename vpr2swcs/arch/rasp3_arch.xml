@@ -942,8 +942,8 @@ CAB2
 				<complete name="crossbar" input="cab2.I[12:0] ota_buffer.out tgate[2:0].out cap2[2:0].out ota2.out tgate2[2:0].out mite[2:0].out mite2.out[1:0] mult[1:0].out[1:0] volswc[1:0].out" output="ota_buffer.in  tgate[2:0].in cap2[2:0].in ota2.in[1:0] tgate2[2:0].in mite[2:0].in[2:0] mite2.in[1:0] mult[1:0].in[3:0] "></complete>
 				<complete name="crossbar" input="ota_buffer.out tgate[2:0].out cap2[2:0].out tgate2[2:0].out mite2.out[1:0] mult[1:0].out[1:0] volswc[1:0].out" output="cab2.O[4:0]"/>
 				<complete name="crossbar" input="ota2.out" output="cab2.O[4]"/>
-				<complete name="crossbar" input="meas_volt_mite[1:0].out mite[2:0].out" output="cab2.O[4]"/>
-				<direct name="crossbar" input="cab2.I[1:0]" output="meas_volt_mite[1:0].in" />
+				<complete name="crossbar" input="meas_volt_mite[1:0].out mite[2:0].out" output="cab2.O[0]"/>
+				<direct name="crossbar" input="cab2.I[1:0]" output="meas_volt_mite[1:0].in[0]" />
 				<direct name="crossbar" input="cab2.si[7:0]" output="sftreg[0].in[7:0]"/>
 				<direct name="crossbar" input="cab2.I[15:13]" output="sftreg[0].in[10:8]"/>
 				<!--direct name="crossbar" input="sftreg.in[7:6]" output="cab2.out[1:0]" /-->
