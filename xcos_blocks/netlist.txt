@@ -1,0 +1,5 @@
+.model ota
+.inputs vinp vinn
+.outputs vout
+.blackbox
+.end

@@ -1,0 +1,76 @@
+.model expt2
+.inputs net1 net2 net3
+.outputs net4 net5
+# Benchmark "div2" written by ABC on Fri May  3 15:50:00 2013
+##.model div2
+##.inputs net3 net4
+##.outputs net6
+
+.latch         n7 ota_divFF_NODE~10  re net3 0
+.latch        n12 ota_divFF_NODE~7  re net3 0
+.latch        n17 ota_divFF_NODE~8  re net3 0
+.latch        n22 ota_divFF_NODE~9  re net3 0
+
+.names net4 ota_divFF_NODE~10 ota_divFF_NODE~9 n17_1 n7
+0011 1
+010- 1
+01-0 1
+.names ota_divFF_NODE~7 ota_divFF_NODE~8 n17_1
+11 1
+.names net4 ota_divFF_NODE~7 n12
+00 1
+.names net4 ota_divFF_NODE~7 ota_divFF_NODE~8 n17
+001 1
+010 1
+.names net4 ota_divFF_NODE~9 ota_divFF_NODE~7 ota_divFF_NODE~8 n22
+0011 1
+010- 1
+01-0 1
+.names ota_divFF_NODE~10 net6
+1 1
+ 
+# ota
+.subckt ota in[0]= net1 in[1]= net2 out=net4
+.end
+  
+.model ota
+.inputs in[0] in[1]
+.outputs out
+.blackbox
+.end
+
+.model cap
+.inputs in
+.outputs out
+.blackbox
+.end
+
+.model nfet
+.inputs in[0] in[1]
+.outputs out
+.blackbox
+.end
+
+.model pfet
+.inputs in[0] in[1]
+.outputs out
+.blackbox
+.end
+
+.model tgate
+.inputs in[0] in[1]
+.outputs out
+.blackbox
+.end
+
+.model nmirror
+.inputs in[0]
+.outputs out
+.blackbox
+.end
+
+.model volswc
+.inputs in[0] in[1] in[2] in[3] in[4] in[5] in[6] in[7] ci[0] ci[1] ci[2] 
+.outputs out co[0] co[1] co[2]
+.blackbox
+.end
