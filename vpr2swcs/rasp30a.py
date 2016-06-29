@@ -542,7 +542,7 @@ class cab2Stats(stats):
 			'tgate[0:2].out[0]'  ,[0,range(16,19)],
             'cap2[0:2].out[0]'    ,[0,range(19, 22)],#y                                
             'tgate2[0:2].out[0]' ,[0,range(22, 25)],#y numbering chnge for nFET0(24) and nFET1(23)
-            'mite[0:2].out[0]'   ,[0,range(25,27)+[31]],# out<10,11,16>
+            'mite[0:2].out[0]'   ,[0,[24,25,31]],# out<10,11,16>
             'mite2.out[0:1]'  	 ,[0,[32,18]],# out<17>,out<3> --it's a 2 i/p 2o/p mite
             'mult[0:1].out[0:1]' ,[0,range(27,31)],# out<12:14>
 			'meas_volt_mite[0:1].out',[0,[[25,26],[31,32,18]]], # we don't want to connect the outout
@@ -553,7 +553,7 @@ class cab2Stats(stats):
 			'tgate[0:2].out'     ,[range(31,27,-1), 0],# in<2:7> y
             'cap2[0:2].in[0]'     ,[range(27,22,-1), 0],# in<8:10> y
             'tgate2[0:1].in[0:1]',[range(17,13,-1)+[15,22], 0],# in<> y 21, 17,-1) it's flipped
-            'mite[0:2].in[0:2]'  ,[range(13,7,-1)+[31,29,15], 0],# in<16:19> n---change (17, 13,-1) it;s flipped
+            'mite[0:2].in[0:2]'  ,[[13,12,11,10,9,8,31,29,15], 0],# in<16:19> n---change (17, 13,-1) it;s flipped
             'mite2.in[0:1]' 	 ,[[27,17], 0],# in<6,16> y
             'mult[0:1].in[0:3]'  ,[range(7,3,-1)+range(21,17,-1), 0],# in<26:29> +in<12:15>
 			'meas_volt_mite[0:1].in',[[[13,12,10,9],[31,29,27,17]],0],
@@ -569,14 +569,15 @@ class cab2Stats(stats):
         self.dev_pins = {'tgate_in':2,'tgate_out':1, 'cap2_in':1,'cap2_out':1, 'tgate2_in':2,'tgate2_out':1, 'ota2_out':1, 'mite_in':3,'mite_out':1, 'mite2_in':2, 'mite2_out':2,'mult_in':4, 'mult_out':2,'meas_volt_mite_in':1,'meas_volt_mite_out':1,'ota_buffer_in':1, 'ota2_in':2,'ota_buffer_out':1}  
         dev_fgs_sm = ['meas_volt_mite[0:1]',[0, [61, 63]],
 			'mite2[0]'	,[0,63],
+			'mite[0:2]',[0, [0,0,0]],
 			#'mite[0]'	,[0,61],
 			'mult[0]'	,[0,0],
 			'mult[1]'	,[1,0],
 			'ota_buffer[0]',[[3,4]],
 			'cap2[0:3]',[0, [57,60,57,60]],
 			'sftreg[0]', [0,0],
-			'mite[0:2]',[0, [61,62,63]],
 			'mite_fg[0:2]'   ,[[31,31,31], 0],
+			'mite_fg0[0]'   ,[[31, 61],[12,0]],
 			'mite2_fg[0]'  ,[[31, 0]],
 			'ota_bias',[[1, 0],[2,0]],
 			'ota2_bias',[[33,62]], #ota in CAB2
@@ -1919,6 +1920,8 @@ class cab2(complexBlock):
 				    else:
 					    swcx.append(0)
 				    if sb.name.split('[')[0] == 'meas_volt_mite' and n==0:
+					    swcx.append(4)
+				    if sb.name.split('[')[0] == 'mite' and n==0:
 					    swcx.append(4)
 				    elif sb.name.split('[')[0] == 'mult' and n==0:
 					    swcx.append(1)
