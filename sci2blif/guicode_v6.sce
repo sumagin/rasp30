@@ -834,7 +834,7 @@ function file30_callback()
     global scs_m;
     text_box_callback(handles)
     xcos(file_name);
-    arb_msg2();
+    
 endfunction
 
 function file16_callback()
