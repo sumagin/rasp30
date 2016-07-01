@@ -67,6 +67,7 @@ file26_menu = uimenu("Parent", file23_menu, "Label", gettext("C4"), "callback", 
 file27_menu = uimenu("Parent", file23_menu, "Label", gettext("C4 + Amplitude Detector"), "callback", "file27_callback()");
 file28_menu = uimenu("Parent", file23_menu, "Label", gettext("Sigma Delta"), "callback", "file28_callback()");
 file29_menu = uimenu("Parent", file23_menu, "Label", gettext("VMM+WTA"), "callback", "file29_callback()");//  w/pad
+file30_menu = uimenu("Parent", file23_menu, "Label", gettext("HH Neuron"), "callback", "file30_callback()");
 
 update_menu = uimenu("Parent", gui, "Label", gettext("Update"),'ForegroundColor',[1,1,1]);
 update1_menu = uimenu("Parent", update_menu, "Label", gettext("Update RASP Tools"), "callback", "up1_callback()");
@@ -797,6 +798,28 @@ function file29_callback()
 
     unix_s('cp /home/ubuntu/rasp30/work/examples/VMM+WTA/vmmwta_test2a.xcos /home/ubuntu/RASP_Workspace/demo_files/VMM+WTA/version_w_pad/');
     file_name= '/home/ubuntu/RASP_Workspace/demo_files/VMM+WTA/version_w_pad/vmmwta_test2a.xcos';
+    [path,fname,extension]=fileparts(file_name);
+    dirpwd = pwd()+'/';
+    if(path ~= dirpwd) then
+        cd(path);
+        filebrowser();
+    end
+    clear scs_m;
+    clear blk_objs;
+
+
+    clear blk; 
+    global scs_m;
+    text_box_callback(handles)
+    xcos(file_name);
+    arb_msg2();
+endfunction
+
+function file30_callback()
+    global file_name path fname extension;
+
+    unix_s('cp /home/ubuntu/rasp30/work/examples/HHneuron/hhn.xcos /home/ubuntu/RASP_Workspace/demo_files/HHneuron/');
+    file_name= '/home/ubuntu/RASP_Workspace/demo_files/HHneuron/hhn.xcos';
     [path,fname,extension]=fileparts(file_name);
     dirpwd = pwd()+'/';
     if(path ~= dirpwd) then
