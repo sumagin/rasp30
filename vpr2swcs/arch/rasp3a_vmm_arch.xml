@@ -28,6 +28,14 @@
 				<port name="out"/>
 			</output_ports>
 		</model>
+		<model name="hhneuron"> 
+			<input_ports>
+				<port name="in"/>
+			</input_ports>
+			<output_ports>
+				<port name="out"/>
+			</output_ports>
+		</model>
 		<model name="speech">
 			<input_ports>
 				<port name="in"/>
@@ -473,6 +481,14 @@
 				<port name="out"/>
 			</output_ports>
 		</model>
+		<model name="ladder_filter">
+			<input_ports>
+				<port name="in"/>
+			</input_ports>
+			<output_ports>
+				<port name="out"/>
+			</output_ports>
+		</model>
 		<model name="fg_io">
 			<input_ports>
 				<port name="in"/>
@@ -668,6 +684,11 @@ CAB
 				<!--clock name="fb" num_pins="1"/>-->
 				<delay_matrix type="max" in_port="c4_blk.in" out_port="c4_blk.out"> 2.69e-10 2.69e-10 </delay_matrix>
 			</pb_type>	
+			<pb_type name="hhneuron" num_pb="1" blif_model=".hhneuron">
+				<input name="in" num_pins="4"/>
+				<output name="out" num_pins="3"/>
+				<delay_constant max="1.667e-9" in_port="hhneuron.in" out_port="hhneuron.out"/>
+			</pb_type>
 			<pb_type name="speech" num_pb="1" blif_model=".speech">
 				<input name="in" num_pins="3"/>
 				<output name="out" num_pins="2"/>
@@ -747,7 +768,12 @@ CAB
 				<input name="in" num_pins="2"/>
 				<output name="out" num_pins="1"/>
 				<delay_constant max="1.667e-9" in_port="vdd_out.in" out_port="vdd_out.out"/>
-			</pb_type>   
+			</pb_type>  
+			<pb_type name="ladder_filter" num_pb="1" blif_model=".ladder_filter">
+				<input name="in" num_pins="2"/>
+				<output name="out" num_pins="3"/>
+				<delay_constant max="1.667e-9" in_port="ladder_filter.in" out_port="ladder_filter.out"/>
+				</pb_type> 
 			<pb_type name="in2in_x1" blif_model=".in2in_x1" num_pb="1">
 				<input name="in" num_pins="3"/>
 				<output name="out" num_pins="1"/>
@@ -781,7 +807,7 @@ CAB
 				<direct name="volswc7" input="volswc[1].co" output="cab.O[7:5]"/>	
 				
 				<!-- input crossbar with device feedback-->
-				<complete name="crossbar" input="cab.I[12:8] fgota[1:0].out cap[3:0].out nfet[1:0].out pfet[1:0].out tgate[3:0].out nmirror[1:0].out volswc[1:0].out" output="fgota[1:0].in[1:0] cap[3:0].in speech[0].in[2:0] nfet[1:0].in[1:0] pfet[1:0].in[1:0] tgate[3:0].in[1:0] nmirror[1:0].in"></complete>
+				<complete name="crossbar" input="cab.I[12:8] fgota[1:0].out cap[3:0].out nfet[1:0].out pfet[1:0].out tgate[3:0].out nmirror[1:0].out volswc[1:0].out" output="fgota[1:0].in[1:0] cap[3:0].in speech[0].in[2:0] nfet[1:0].in[1:0] pfet[1:0].in[1:0] tgate[3:0].in[1:0] ladder_filter[0].in[1:0] hhneuron[0].in[3:0] nmirror[1:0].in"></complete>
 				<!-- output crossbar -->
                                 <complete name="crossbar" input="fgota[1:0].out cap[3:0].out nfet[1:0].out pfet[1:0].out nmirror[1:0].out volswc[1:0].out volt_div[1:0].out gnd_out.out vdd_out.out integrator.out integrator_nmirror.out tgate[3:0].out in2in_x1.out nfet_i2v.out pfet_i2v.out" output="cab.O[3]"/>
 				<!--direct name="crossbar" input="in2in_x1.out " output="in2in_x1.in[0]" /-->
@@ -791,7 +817,9 @@ CAB
 				<complete name="crossbar" input="speech[0].out[1:0] fgota[0].out pfet[0].out" output="cab.O[4:3] "/>
 				<complete name="crossbar" input="cab.I[12]" output="sigma_delta_fe.in[4]"/>
 				<complete name="crossbar" input="cab.I[6] cab.I[12]" output="c4_blk.in[1:0] fgota[1:0].in[1:0] peak_detector.in[1]"/>
-				<complete name="crossbar" input="cab.I[6]" output="peak_detector.in[0] fgota[1:0].in[0]"/>		
+				<complete name="crossbar" input="hhneuron[0].out[2:0]" output="cab.O[4:0]"/>
+				<complete name="crossbar" input="cab.I[6]" output="peak_detector.in[0] fgota[1:0].in[0]"/>
+				<complete name="crossbar" input="ladder_filter[0].out[2:0]" output="cab.O[4:0] "/>		
 				<complete name="crossbar" input="c4_blk.out[0] peak_detector.out" output="cab.O[4]"/>
 				<complete name="crossbar" input="cab.I[11:9] cab.I[8]" output="ota.in ramp_fe.in ota_buf.in sigma_delta_fe.in[3:0]"/>	
 				<complete name="crossbar" input="ota.out ota_buf.out ramp_fe.out sigma_delta_fe.out" output="cab.O[4] "/>
