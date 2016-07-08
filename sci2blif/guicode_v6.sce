@@ -1055,10 +1055,10 @@ function up2_callback()
 
     if(path ~= "") then
         unix_s('cd; sudo chown ubuntu:ubuntu rasp30/ -R')
-        unix_s('cd; rm ~/rasp30 -rf; svn co https://github.com/sumagin/rasp30/trunk ~/rasp30/; cd '+path);
+        unix_s('cd; rm ~/rasp30 -rf; svn co https://github.com/jhasler/rasp30/trunk ~/rasp30/; cd '+path);
     else
         unix_s('cd; sudo chown ubuntu:ubuntu rasp30/ -R')
-        unix_s('cd; rm ~/rasp30 -rf; svn co https://github.com/sumagin/rasp30/trunk ~/rasp30/');
+        unix_s('cd; rm ~/rasp30 -rf; svn co https://github.com/jhasler/rasp30/trunk ~/rasp30/');
     end
     messagebox(["RASP Tools has been reset." "Scilab will now close for the changes to take effect in RASP Tools." "Please restart RASP Tools."],"Reset Complete!" , "info", "modal");
 
